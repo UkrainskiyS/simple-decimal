@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static java.math.BigDecimal.ZERO;
 import static java.math.RoundingMode.HALF_UP;
-import static ukrainskiys.decimal.Decimal.HUNDRED;
+import static ukrainskiys.decimal.SimpleDecimal.HUNDRED;
 
 public class DecimalUtils {
 
@@ -44,7 +44,7 @@ public class DecimalUtils {
                 .divide(HUNDRED, 2, HALF_UP);
     }
 
-    public static BigDecimal valueOrZero(BigDecimal decimal) {
+    public static BigDecimal safeGet(BigDecimal decimal) {
         return decimal == null ? ZERO : decimal;
     }
 
