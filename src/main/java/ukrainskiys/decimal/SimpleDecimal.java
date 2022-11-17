@@ -2,23 +2,12 @@ package ukrainskiys.decimal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
+import ukrainskiys.decimal.constant.Decimal;
 
 /**
  * Класс-обертка для BigDecimal
  */
 public class SimpleDecimal extends BigDecimal {
-
-    /**
-     * <pre>{@code
-     * Decimal.ZERO == 0
-     * Decimal.ONE == 1
-     * Decimal.TEN == 10
-     * Decimal.HUNDRED == 100}</pre>
-     */
-    public static final SimpleDecimal ZERO = new SimpleDecimal(BigDecimal.ZERO);
-    public static final SimpleDecimal ONE = new SimpleDecimal(BigDecimal.ONE);
-    public static final SimpleDecimal TEN = new SimpleDecimal(BigDecimal.TEN);
-    public static final SimpleDecimal HUNDRED = new SimpleDecimal(BigDecimal.valueOf(100));
 
     /**
      * <pre>{@code
@@ -191,7 +180,7 @@ public class SimpleDecimal extends BigDecimal {
             }
             return new SimpleDecimal(result.setScale(++count, RoundingMode.HALF_UP));
         } catch (ArrayIndexOutOfBoundsException e) {
-            return SimpleDecimal.ZERO;
+            return Decimal.ZERO;
         }
     }
 
@@ -216,7 +205,7 @@ public class SimpleDecimal extends BigDecimal {
      * Decimal.of(200).ofPercent(50) == 100}</pre>
      */
     public SimpleDecimal ofPercent(int percent) {
-        return multiply(percent).safeDivide(SimpleDecimal.HUNDRED);
+        return multiply(percent).safeDivide(Decimal.HUNDRED);
     }
 
     /**

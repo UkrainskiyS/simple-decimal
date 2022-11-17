@@ -7,7 +7,7 @@ import java.util.Objects;
 
 import static java.math.BigDecimal.ZERO;
 import static java.math.RoundingMode.HALF_UP;
-import static ukrainskiys.decimal.SimpleDecimal.HUNDRED;
+import static ukrainskiys.decimal.constant.Decimal.HUNDRED;
 
 public class DecimalUtils {
 
@@ -18,12 +18,22 @@ public class DecimalUtils {
                 .orElse(ZERO);
     }
 
+    public static BigDecimal max(Collection<BigDecimal> decimals) {
+        return max(decimals.toArray(BigDecimal[]::new));
+    }
+
+
     public static BigDecimal min(BigDecimal... decimals) {
         return Arrays.stream(decimals)
                 .filter(Objects::nonNull)
                 .min(BigDecimal::compareTo)
                 .orElse(ZERO);
     }
+
+    public static BigDecimal min(Collection<BigDecimal> decimals) {
+        return min(decimals.toArray(BigDecimal[]::new));
+    }
+
 
     public static BigDecimal sum(BigDecimal... decimals) {
         return Arrays.stream(decimals)
