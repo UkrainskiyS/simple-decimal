@@ -37,7 +37,7 @@ class Main {
 
 Constants:
 
-```
+```java
 Decimals.ZERO;
 Decimals.ONE;
 Decimals.TEN; 
