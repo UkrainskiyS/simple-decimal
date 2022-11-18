@@ -2,12 +2,12 @@ package xyz.ukrainskiys.decimal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import xyz.ukrainskiys.decimal.constant.Decimal;
+import xyz.ukrainskiys.decimal.constant.Decimals;
 
 /**
  * Класс-обертка для BigDecimal
  */
-public class SimpleDecimal extends BigDecimal {
+public class Decimal extends BigDecimal {
 
     /**
      * <pre>{@code
@@ -17,36 +17,36 @@ public class SimpleDecimal extends BigDecimal {
      * Decimal.of(6.66) == 6.66
      * Decimal.ofKopecks(12345) == 123.45}</pre>
      */
-    public SimpleDecimal(BigDecimal bigDecimal) {
+    public Decimal(BigDecimal bigDecimal) {
         super(bigDecimal.toString());
     }
 
-    public SimpleDecimal() {
+    public Decimal() {
         super(BigDecimal.ZERO.toString());
     }
 
-    public static SimpleDecimal of(int value) {
-        return new SimpleDecimal(BigDecimal.valueOf(value));
+    public static Decimal of(int value) {
+        return new Decimal(BigDecimal.valueOf(value));
     }
 
-    public static SimpleDecimal of(long value) {
-        return new SimpleDecimal(BigDecimal.valueOf(value));
+    public static Decimal of(long value) {
+        return new Decimal(BigDecimal.valueOf(value));
     }
 
-    public static SimpleDecimal of(double value) {
-        return new SimpleDecimal(BigDecimal.valueOf(value));
+    public static Decimal of(double value) {
+        return new Decimal(BigDecimal.valueOf(value));
     }
 
-    public static SimpleDecimal of(String value) {
-        return new SimpleDecimal(new BigDecimal(value));
+    public static Decimal of(String value) {
+        return new Decimal(new BigDecimal(value));
     }
 
-    public static SimpleDecimal of(BigDecimal value) {
-        return new SimpleDecimal(DecimalUtils.safeGet(value));
+    public static Decimal of(BigDecimal value) {
+        return new Decimal(DecimalUtils.safeGet(value));
     }
 
-    public static SimpleDecimal ofKopecks(long kopecks) {
-        return new SimpleDecimal(BigDecimal.valueOf(kopecks)).safeDivide(100);
+    public static Decimal ofKopecks(long kopecks) {
+        return new Decimal(BigDecimal.valueOf(kopecks)).safeDivide(100);
     }
 
     /**
@@ -95,70 +95,70 @@ public class SimpleDecimal extends BigDecimal {
         return compareTo(new BigDecimal(value)) < 0;
     }
 
-    public SimpleDecimal max(SimpleDecimal value) {
+    public Decimal max(Decimal value) {
         return of(super.max(value));
     }
 
 
-    public SimpleDecimal add(BigDecimal other) {
-        return new SimpleDecimal(super.add(DecimalUtils.safeGet(other)));
+    public Decimal add(BigDecimal other) {
+        return new Decimal(super.add(DecimalUtils.safeGet(other)));
     }
 
-    public SimpleDecimal add(int value) {
-        return add(SimpleDecimal.of(BigDecimal.valueOf(value)));
+    public Decimal add(int value) {
+        return add(Decimal.of(BigDecimal.valueOf(value)));
     }
 
-    public SimpleDecimal add(long value) {
-        return add(SimpleDecimal.of(BigDecimal.valueOf(value)));
+    public Decimal add(long value) {
+        return add(Decimal.of(BigDecimal.valueOf(value)));
     }
 
-    public SimpleDecimal add(double value) {
-        return add(SimpleDecimal.of(BigDecimal.valueOf(value)));
+    public Decimal add(double value) {
+        return add(Decimal.of(BigDecimal.valueOf(value)));
     }
 
-    public SimpleDecimal add(String value) {
-        return add(SimpleDecimal.of(new BigDecimal(value)));
-    }
-
-
-    public SimpleDecimal subtract(BigDecimal other) {
-        return new SimpleDecimal(super.subtract(DecimalUtils.safeGet(other)));
-    }
-
-    public SimpleDecimal subtract(int value) {
-        return subtract(SimpleDecimal.of(BigDecimal.valueOf(value)));
-    }
-
-    public SimpleDecimal subtract(long value) {
-        return subtract(SimpleDecimal.of(BigDecimal.valueOf(value)));
-    }
-
-    public SimpleDecimal subtract(double value) {
-        return subtract(SimpleDecimal.of(BigDecimal.valueOf(value)));
-    }
-
-    public SimpleDecimal subtract(String value) {
-        return subtract(SimpleDecimal.of(new BigDecimal(value)));
+    public Decimal add(String value) {
+        return add(Decimal.of(new BigDecimal(value)));
     }
 
 
-    public SimpleDecimal multiply(BigDecimal other) {
-        return new SimpleDecimal(super.multiply(DecimalUtils.safeGet(other)));
+    public Decimal subtract(BigDecimal other) {
+        return new Decimal(super.subtract(DecimalUtils.safeGet(other)));
     }
 
-    public SimpleDecimal multiply(int value) {
+    public Decimal subtract(int value) {
+        return subtract(Decimal.of(BigDecimal.valueOf(value)));
+    }
+
+    public Decimal subtract(long value) {
+        return subtract(Decimal.of(BigDecimal.valueOf(value)));
+    }
+
+    public Decimal subtract(double value) {
+        return subtract(Decimal.of(BigDecimal.valueOf(value)));
+    }
+
+    public Decimal subtract(String value) {
+        return subtract(Decimal.of(new BigDecimal(value)));
+    }
+
+
+    public Decimal multiply(BigDecimal other) {
+        return new Decimal(super.multiply(DecimalUtils.safeGet(other)));
+    }
+
+    public Decimal multiply(int value) {
         return multiply(BigDecimal.valueOf(value));
     }
 
-    public SimpleDecimal multiply(long value) {
+    public Decimal multiply(long value) {
         return multiply(BigDecimal.valueOf(value));
     }
 
-    public SimpleDecimal multiply(double value) {
+    public Decimal multiply(double value) {
         return multiply(BigDecimal.valueOf(value));
     }
 
-    public SimpleDecimal multiply(String value) {
+    public Decimal multiply(String value) {
         return multiply(new BigDecimal(value));
     }
 
@@ -167,7 +167,7 @@ public class SimpleDecimal extends BigDecimal {
      * Decimal.HUNDRED.safeDivide(10) == 10
      * Decimal.HUNDRED.safeDivide(33) == 3.0303030303}</pre>
      */
-    public SimpleDecimal safeDivide(BigDecimal other) {
+    public Decimal safeDivide(BigDecimal other) {
         final var result = this.divide(DecimalUtils.safeGet(other), 11, RoundingMode.HALF_UP);
         try {
             final var afterDot =  result.toString().split("\\.")[1].toCharArray();
@@ -178,34 +178,34 @@ public class SimpleDecimal extends BigDecimal {
                 }
                 count--;
             }
-            return new SimpleDecimal(result.setScale(++count, RoundingMode.HALF_UP));
+            return new Decimal(result.setScale(++count, RoundingMode.HALF_UP));
         } catch (ArrayIndexOutOfBoundsException e) {
-            return Decimal.ZERO;
+            return Decimals.ZERO;
         }
     }
 
-    public SimpleDecimal safeDivide(int value) {
-        return safeDivide(SimpleDecimal.of(value));
+    public Decimal safeDivide(int value) {
+        return safeDivide(Decimal.of(value));
     }
 
-    public SimpleDecimal safeDivide(long value) {
-        return safeDivide(SimpleDecimal.of(value));
+    public Decimal safeDivide(long value) {
+        return safeDivide(Decimal.of(value));
     }
 
-    public SimpleDecimal safeDivide(double value) {
-        return safeDivide(SimpleDecimal.of(value));
+    public Decimal safeDivide(double value) {
+        return safeDivide(Decimal.of(value));
     }
 
-    public SimpleDecimal safeDivide(String value) {
-        return safeDivide(SimpleDecimal.of(value));
+    public Decimal safeDivide(String value) {
+        return safeDivide(Decimal.of(value));
     }
 
     /**
      * <pre>{@code
      * Decimal.of(200).ofPercent(50) == 100}</pre>
      */
-    public SimpleDecimal ofPercent(int percent) {
-        return multiply(percent).safeDivide(Decimal.HUNDRED);
+    public Decimal ofPercent(int percent) {
+        return multiply(percent).safeDivide(Decimals.HUNDRED);
     }
 
     /**
@@ -234,12 +234,12 @@ public class SimpleDecimal extends BigDecimal {
      * Decimal.of(3.0303030303).safeSetScale(1) == 3.0
      * Decimal.of(3.0303030303).setScaleWithKopecks() == 3.03}</pre>
      */
-    public SimpleDecimal safeSetScale(int scale) {
-        return new SimpleDecimal(setScale(scale, RoundingMode.HALF_UP));
+    public Decimal safeSetScale(int scale) {
+        return new Decimal(setScale(scale, RoundingMode.HALF_UP));
     }
 
-    public SimpleDecimal setScaleWithKopecks() {
-        return new SimpleDecimal(safeSetScale(2));
+    public Decimal setScaleWithKopecks() {
+        return new Decimal(safeSetScale(2));
     }
 
 }
