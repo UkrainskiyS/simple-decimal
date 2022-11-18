@@ -34,6 +34,17 @@ class Main {
   }
 }
 ```
+
+Constants:
+
+```
+Decimals.ZERO;
+Decimals.ONE;
+Decimals.TEN; 
+Decimals.HUNDRED;
+Decimals.THOUSAND;
+```
+
 Comparison:
 ```java
 Decimals.HUNDRED.more(Decimals.TEN); // true   
