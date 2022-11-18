@@ -70,7 +70,7 @@ class Main {
     decimal.subtract(1.5); // 99.5
     decimal.multiply(5); // 500
     decimal.safeDivide(Decimals.TEN); // 10
-    Decimal.HUNDRED.safeDivide(33); // 3.0303030303
+    decimal.safeDivide(33); // 3.0303030303
   }
 }
 ```
