@@ -1,7 +1,7 @@
-#Simple Decimal
+# Simple Decimal
 Java library with more convenient class alternative BigDecimal!
 
-###Download
+### Download
 Maven:
 ```xml
 <dependency>
@@ -17,7 +17,7 @@ dependencies {
 }
 ```
 
-###Documentation
+### Documentation
 Create instance:
 
 ```java
