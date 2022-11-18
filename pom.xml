@@ -10,7 +10,7 @@
 
     <name>Simple Decimal</name>
     <description>Library for more convenient use of class BigDecimal</description>
-    <url>https://ukrainskiys.xyz/simple-decimal</url>
+    <url>https://gitlab.com/xyz.ukrainskiys/simple-decimal</url>
 
     <properties>
         <maven.compiler.source>17</maven.compiler.source>
