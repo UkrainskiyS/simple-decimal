@@ -1,7 +1,7 @@
-package ukrainskiys.decimal.constant;
+package xyz.ukrainskiys.decimal.constant;
 
 import java.math.BigDecimal;
-import ukrainskiys.decimal.SimpleDecimal;
+import xyz.ukrainskiys.decimal.SimpleDecimal;
 
 /**
  * <pre>{@code

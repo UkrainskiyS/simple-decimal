@@ -1,13 +1,13 @@
-package ukrainskiys.decimal;
+package xyz.ukrainskiys.decimal;
 
 import java.math.BigDecimal;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.Objects;
+import xyz.ukrainskiys.decimal.constant.Decimal;
 
 import static java.math.BigDecimal.ZERO;
 import static java.math.RoundingMode.HALF_UP;
-import static ukrainskiys.decimal.constant.Decimal.HUNDRED;
 
 public class DecimalUtils {
 
@@ -46,12 +46,12 @@ public class DecimalUtils {
     }
 
     public static long toKopecks(BigDecimal decimal) {
-        return decimal.multiply(HUNDRED).longValue();
+        return decimal.multiply(Decimal.HUNDRED).longValue();
     }
 
     public static BigDecimal fromKopecks(long kopecks) {
         return new BigDecimal(kopecks)
-                .divide(HUNDRED, 2, HALF_UP);
+                .divide(Decimal.HUNDRED, 2, HALF_UP);
     }
 
     public static BigDecimal safeGet(BigDecimal decimal) {

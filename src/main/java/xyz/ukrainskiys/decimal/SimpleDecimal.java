@@ -1,8 +1,8 @@
-package ukrainskiys.decimal;
+package xyz.ukrainskiys.decimal;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
-import ukrainskiys.decimal.constant.Decimal;
+import xyz.ukrainskiys.decimal.constant.Decimal;
 
 /**
  * Класс-обертка для BigDecimal
