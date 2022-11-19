@@ -4,10 +4,10 @@ import java.math.BigDecimal;
 import java.math.RoundingMode;
 import xyz.ukrainskiys.decimal.constant.Decimals;
 
-/**
- * Класс-обертка для BigDecimal
- */
-public class Decimal extends BigDecimal {
+public class Decimal extends Number implements Comparable<Decimal> {
+
+    private final BigDecimal bigDecimal;
+
 
     /**
      * <pre>{@code
@@ -18,11 +18,11 @@ public class Decimal extends BigDecimal {
      * Decimal.ofKopecks(12345) == 123.45}</pre>
      */
     public Decimal(BigDecimal bigDecimal) {
-        super(bigDecimal.toString());
+        this.bigDecimal = bigDecimal;
     }
 
     public Decimal() {
-        super(BigDecimal.ZERO.toString());
+        this.bigDecimal = BigDecimal.ZERO;
     }
 
     public static Decimal of(int value) {
@@ -55,53 +55,69 @@ public class Decimal extends BigDecimal {
      * Decimal.HUNDRED.less(Decimal.TEN) == false
      * Decimal.HUNDRED.more(100) == false}</pre>
      */
+    public boolean more(Decimal other) {
+        return bigDecimal.compareTo(other.bigDecimal) > 0;
+    }
+
     public boolean more(BigDecimal other) {
-        return compareTo(DecimalUtils.safeGet(other)) > 0;
+        return bigDecimal.compareTo(DecimalUtils.safeGet(other)) > 0;
     }
 
     public boolean more(int value) {
-        return compareTo(BigDecimal.valueOf(value)) > 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) > 0;
     }
 
     public boolean more(long value) {
-        return compareTo(BigDecimal.valueOf(value)) > 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) > 0;
     }
 
     public boolean more(double value) {
-        return compareTo(BigDecimal.valueOf(value)) > 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) > 0;
     }
 
     public boolean more(String value) {
-        return compareTo(new BigDecimal(value)) > 0;
+        return bigDecimal.compareTo(new BigDecimal(value)) > 0;
+    }
+
+    public boolean less(Decimal other) {
+        return bigDecimal.compareTo(other.bigDecimal) < 0;
     }
 
     public boolean less(BigDecimal other) {
-        return compareTo(DecimalUtils.safeGet(other)) < 0;
+        return bigDecimal.compareTo(DecimalUtils.safeGet(other)) < 0;
     }
 
     public boolean less(int value) {
-        return compareTo(BigDecimal.valueOf(value)) < 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) < 0;
     }
 
     public boolean less(long value) {
-        return compareTo(BigDecimal.valueOf(value)) < 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) < 0;
     }
 
     public boolean less(double value) {
-        return compareTo(BigDecimal.valueOf(value)) < 0;
+        return bigDecimal.compareTo(BigDecimal.valueOf(value)) < 0;
     }
 
     public boolean less(String value) {
-        return compareTo(new BigDecimal(value)) < 0;
+        return bigDecimal.compareTo(new BigDecimal(value)) < 0;
     }
 
     public Decimal max(Decimal value) {
-        return of(super.max(value));
+        return Decimal.of(bigDecimal.max(value.bigDecimal));
+    }
+
+    public Decimal min(Decimal value) {
+        return Decimal.of(bigDecimal.min(value.bigDecimal));
     }
 
 
+    public Decimal add(Decimal other) {
+        return Decimal.of(bigDecimal.add(other.bigDecimal));
+    }
+
     public Decimal add(BigDecimal other) {
-        return new Decimal(super.add(DecimalUtils.safeGet(other)));
+        return Decimal.of(bigDecimal.add(DecimalUtils.safeGet(other)));
     }
 
     public Decimal add(int value) {
@@ -121,8 +137,12 @@ public class Decimal extends BigDecimal {
     }
 
 
+    public Decimal subtract(Decimal other) {
+        return new Decimal(bigDecimal.subtract(other.bigDecimal));
+    }
+
     public Decimal subtract(BigDecimal other) {
-        return new Decimal(super.subtract(DecimalUtils.safeGet(other)));
+        return new Decimal(bigDecimal.subtract(DecimalUtils.safeGet(other)));
     }
 
     public Decimal subtract(int value) {
@@ -142,8 +162,12 @@ public class Decimal extends BigDecimal {
     }
 
 
+    public Decimal multiply(Decimal other) {
+        return new Decimal(bigDecimal.multiply(other.bigDecimal));
+    }
+
     public Decimal multiply(BigDecimal other) {
-        return new Decimal(super.multiply(DecimalUtils.safeGet(other)));
+        return new Decimal(bigDecimal.multiply(DecimalUtils.safeGet(other)));
     }
 
     public Decimal multiply(int value) {
@@ -167,8 +191,8 @@ public class Decimal extends BigDecimal {
      * Decimal.HUNDRED.safeDivide(10) == 10
      * Decimal.HUNDRED.safeDivide(33) == 3.0303030303}</pre>
      */
-    public Decimal safeDivide(BigDecimal other) {
-        final var result = this.divide(DecimalUtils.safeGet(other), 11, RoundingMode.HALF_UP);
+    public Decimal safeDivide(Decimal other) {
+        final var result = bigDecimal.divide(other.bigDecimal, 11, RoundingMode.HALF_UP);
         try {
             final var afterDot =  result.toString().split("\\.")[1].toCharArray();
             int count = afterDot.length - 1;
@@ -182,6 +206,10 @@ public class Decimal extends BigDecimal {
         } catch (ArrayIndexOutOfBoundsException e) {
             return Decimals.ZERO;
         }
+    }
+
+    public Decimal safeDivide(BigDecimal other) {
+        return safeDivide(Decimal.of(other));
     }
 
     public Decimal safeDivide(int value) {
@@ -213,8 +241,12 @@ public class Decimal extends BigDecimal {
      * Decimal.of(10).is(BigDecimal.TEN) == true
      * Decimal.of(10.00).is(10) == true}</pre>
      */
+    public boolean is(Decimal other) {
+        return bigDecimal.compareTo(other.bigDecimal) == 0;
+    }
+
     public boolean is(BigDecimal other) {
-        return this.compareTo(DecimalUtils.safeGet(other)) == 0;
+        return bigDecimal.compareTo(DecimalUtils.safeGet(other)) == 0;
     }
 
     public boolean is(int value) {
@@ -235,11 +267,41 @@ public class Decimal extends BigDecimal {
      * Decimal.of(3.0303030303).setScaleWithKopecks() == 3.03}</pre>
      */
     public Decimal safeSetScale(int scale) {
-        return new Decimal(setScale(scale, RoundingMode.HALF_UP));
+        return new Decimal(bigDecimal.setScale(scale, RoundingMode.HALF_UP));
     }
 
     public Decimal setScaleWithKopecks() {
-        return new Decimal(safeSetScale(2));
+        return safeSetScale(2);
+    }
+
+
+    public BigDecimal getBigDecimal() {
+        return bigDecimal;
+    }
+
+    @Override
+    public int intValue() {
+        return bigDecimal.intValue();
+    }
+
+    @Override
+    public long longValue() {
+        return bigDecimal.longValue();
+    }
+
+    @Override
+    public float floatValue() {
+        return bigDecimal.floatValue();
+    }
+
+    @Override
+    public double doubleValue() {
+        return bigDecimal.doubleValue();
+    }
+
+    @Override
+    public int compareTo(Decimal o) {
+        return bigDecimal.compareTo(o.bigDecimal);
     }
 
 }
