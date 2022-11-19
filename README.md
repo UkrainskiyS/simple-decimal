@@ -18,7 +18,7 @@ dependencies {
 ```
 
 ### Documentation
-Create instance:
+##### Create instance:
 
 ```java
 import xyz.ukrainskiys.decimal.Decimal;
@@ -35,7 +35,7 @@ class Main {
 }
 ```
 
-Constants:
+##### Constants:
 
 ```java
 Decimals.ZERO;
@@ -45,7 +45,7 @@ Decimals.HUNDRED;
 Decimals.THOUSAND;
 ```
 
-Comparison:
+##### Comparison:
 ```java
 Decimals.HUNDRED.more(Decimals.TEN); // true   
 Decimals.HUNDRED.less(Decimals.TEN); // false   
@@ -57,7 +57,7 @@ Decimal.of(10).is(BigDecimal.TEN); // true
 Decimal.of(10.00).is(10); // true
 ```
 
-Default operations:
+##### Default operations:
 ```java
 import xyz.ukrainskiys.decimal.constant.Decimals;
 
@@ -75,7 +75,7 @@ class Main {
 }
 ```
 
-Additional features:
+##### Additional features:
 ```java
 Decimal.of(200).ofPercent(50); // 100
     
@@ -84,3 +84,26 @@ Decimal.of(3.0303030303).setScaleWithKopecks(); // 3.03
 Decimal.of(3.0303030303).setScale(2, RoundingMode.HALF_UP); // 3.03 (Standard BigDecimal method)
 ```
 
+##### JPA:
+For use the Decimal class with JPA, you must specify a converter.
+```java
+import javax.persistence.Column;
+import javax.persistence.Convert;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import xyz.ukrainskiys.decimal.Decimal;
+import xyz.ukrainskiys.decimal.converter.DecimalConverter;
+
+@Entity
+public class TestElement {
+
+  @Id
+  @Column(name = "id", nullable = false)
+  private Long id;
+
+  @Convert(converter = DecimalConverter.class)
+  private Decimal decimal;
+}
+```
+In the table, this will be the numeric type, like BigDecimal.
+![Example](img/decimal_table_example.png)

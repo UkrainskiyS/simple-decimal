@@ -6,7 +6,7 @@
 
     <groupId>xyz.ukrainskiys</groupId>
     <artifactId>simple-decimal</artifactId>
-    <version>1.1</version>
+    <version>1.2</version>
 
     <name>Simple Decimal</name>
     <description>Library for more convenient use of class BigDecimal</description>
@@ -145,4 +145,13 @@
             </build>
         </profile>
     </profiles>
+
+    <dependencies>
+        <dependency>
+            <groupId>javax.persistence</groupId>
+            <artifactId>javax.persistence-api</artifactId>
+            <version>2.2</version>
+        </dependency>
+    </dependencies>
+
 </project>

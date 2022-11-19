@@ -1,13 +1,13 @@
 package xyz.ukrainskiys.decimal;
 
+import java.io.Serializable;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import xyz.ukrainskiys.decimal.constant.Decimals;
 
-public class Decimal extends Number implements Comparable<Decimal> {
+public class Decimal extends Number implements Comparable<Decimal>, Serializable {
 
     private final BigDecimal bigDecimal;
-
 
     /**
      * <pre>{@code
@@ -304,4 +304,8 @@ public class Decimal extends Number implements Comparable<Decimal> {
         return bigDecimal.compareTo(o.bigDecimal);
     }
 
+    @Override
+    public String toString() {
+        return bigDecimal.toString();
+    }
 }
