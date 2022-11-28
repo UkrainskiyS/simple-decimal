@@ -7,13 +7,13 @@ Maven:
 <dependency>
   <groupId>xyz.ukrainskiys</groupId>
   <artifactId>simple-decimal</artifactId>
-  <version>1.0</version>
+  <version>1.2</version>
 </dependency>
 ```
 Gradle:
 ```groovy
 dependencies {
-  implementation 'xyz.ukrainskiys:simple-decimal:1.0'
+  implementation 'xyz.ukrainskiys:simple-decimal:1.2'
 }
 ```
 
